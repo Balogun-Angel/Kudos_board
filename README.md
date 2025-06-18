@@ -15,7 +15,7 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
 - [ ] **Home Page Display**
   - [ ] Home page includes the following features:
     - [ ] Header
-    - [ ] Banner
+    - [] Banner
     - [ ] Search bar
     - [ ] List of boards
     - [ ] Footer
