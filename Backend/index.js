@@ -14,54 +14,6 @@
 // app.use('/boards', boardRoutes);
 // app.use('/cards', cardRoutes);
 
-// app.get('/', (req, res)=>{
-//   res.send('API NOT WORKING');
-// });
-
-// // app.get('/boards', async (req, res) => {
-// //   try {
-// //     const boards = await prisma.board.findMany({
-// //       // include: { cards: true },
-// //       orderBy: { createdAt: 'desc' }
-// //     });
-// //     res.json(boards);
-// //   } catch (err) {
-// //     logError(err);
-// //     res.status(500).json({ error: 'Failed to fetch boards' });
-// //   }
-// // });
-
-// // // Create new board
-// // app.post('/boards', async (req, res) => {
-// //   const { title, category, author } = req.body;
-// //   try {
-// //     const newBoard = await prisma.board.create({
-// //       data: {
-// //         title,
-// //         category,
-// //         author
-// //       }
-// //     });
-// //     res.json(newBoard);
-// //   } catch (err) {
-// //     logError(err);
-// //     res.status(500).json({ error: 'Failed to create board' });
-// //   }
-// // });
-
-// // // Delete a board
-// // app.delete('/boards/:id', async (req, res) => {
-// //   const { id } = req.params;
-// //   try {
-// //     const deleted = await prisma.board.delete({
-// //       where: { id: parseInt(id) }
-// //     });
-// //     res.json(deleted);
-// //   } catch (err) {
-// //     logError(err);
-// //     res.status(500).json({ error: 'Failed to delete board' });
-// //   }
-// // });
 
 // const PORT = process.env.PORT||3000;
 // app.listen(PORT, () => {
@@ -93,13 +45,20 @@ app.get('/', (req, res) => {
 });
 
 app.get("/boards", async (req, res) => {
-  // const{category, autor} =req.query;
+  const{category, author} =req.query;
 
-  // const filters={}
+  const filters={}
+  if (category){
+    filters.category=category;
+  }
+  if (author){
+    filters.author=author;
+  }
   
 
   try {
     const boards = await prisma.board.findMany({
+      where: filters,
       include: { cards: true },
       orderBy: { createdAt: "desc" },
     });

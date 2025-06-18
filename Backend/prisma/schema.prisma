@@ -30,7 +30,7 @@ model Card {
   author     String?
   upvotes     Int     @default(0)
   boardId      Int
-  board        Board   @relation(fields: [boardId], references:[id])
+  board        Board   @relation(fields: [boardId], references:[id], onDelete: Cascade)
   createdAt   DateTime  @default(now())
 }
 
