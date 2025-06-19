@@ -11,7 +11,7 @@ function Home() {
 
   // Fetch all boards
   useEffect(() => {
-    fetch("http://localhost:3000/boards")
+    fetch(`${import.meta.env.VITE_KUDOS_BOARD_API_URL}/boards`)
       .then((res) => res.json())
       .then((data) => {
         setBoards(data);
