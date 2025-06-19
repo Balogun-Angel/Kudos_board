@@ -21,6 +21,7 @@ app.get("/boards", async (req, res) => {
     filters.author=author;
   }
 
+  
   try {
     const boards = await prisma.board.findMany({
       where: filters,
