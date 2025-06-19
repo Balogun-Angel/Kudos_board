@@ -8,6 +8,7 @@ function Home() {
   const [filteredBoards, setFilteredBoards] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
+  const [showModal, setShowModal] = useState(false);
 
   // Fetch all boards
   useEffect(() => {
@@ -55,52 +56,70 @@ function Home() {
   };
 
   return (
-    <div className="home-page">
-      <h1>KUDOBOARD </h1>
-
-      
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search boards..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button onClick={() => setSearch("")}>Clear</button>
-      </div>
-
-      
-      <div className="filters">
-        {["All", "Recent", "Celebration", "Thank You", "Inspiration"].map(
-          (btn) => (
-            <button
-              key={btn}
-              onClick={() => setFilter(btn)}
-              className={filter === btn ? "active" : ""}
-            >
-              {btn}
-            </button>
-          )
+    <div className="app-container">
+        <h1>KUDOBOARD </h1>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search boards..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={() => setSearch("")}>Clear</button>
+        </div>
+        <div className="filters">
+          {["All", "Recent", "Celebration", "Thank You", "Inspiration"].map(
+            (btn) => (
+              <button
+                key={btn}
+                onClick={() => setFilter(btn)}
+                className={filter === btn ? "active" : ""}
+              >
+                {btn}
+              </button>
+            )
+          )}
+        </div>
+        <div className="create-button-container">
+          <button onClick={() => setShowModal(true)}>Create a New Board</button>
+        </div>
+        {showModal && (
+          <div className="modal-backdrop" onClick={() => setShowModal(false)}>
+            <div className="modal" onClick={(e) => e.stopPropagation()}>
+              <CreateBoardForm
+                onBoardCreated={(newBoard) => {
+                  handleAddBoard(newBoard);
+                  setShowModal(false);
+                }}
+              />
+              <button
+                className="close-modal"
+                onClick={() => setShowModal(false)}
+              >
+                ×
+              </button>
+            </div>
+          </div>
         )}
-      </div>
-
-      
-      <CreateBoardForm onBoardCreated={handleAddBoard} />
-
-      
-      <div className="board-grid">
-        {filteredBoards.map((board) => {
+        <div className="board-grid">
+          {filteredBoards.map((board) => {
             const randomNumber = Math.floor(Math.random() * 1000);
             const imgUrl = `https://picsum.photos/200/300?random=${randomNumber}`;
-            return <BoardCard
+            return (
+              <BoardCard
                 key={board.id}
                 board={board}
                 onDelete={handleDeleteBoard}
                 imgUrl={imgUrl}
-          />
-        })}
+              />
+            );
+          })}
+        </div>
+        <footer className="footer">
+          <p>&copy; 2025 kudoboard</p>
+        </footer>
       </div>
-    </div>
+    
   );
 }
 
