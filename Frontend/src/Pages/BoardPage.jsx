@@ -1,0 +1,122 @@
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+
+function BoardPage() {
+  const { id } = useParams();
+  const [board, setBoard] = useState(null);
+  const [cards, setCards] = useState([]);
+  const [message, setMessage] = useState("");
+  const [gifUrl, setGifUrl] = useState("");
+  const [author, setAuthor] = useState("");
+
+  // Fetch board and its cards
+  useEffect(() => {
+    fetch(`http://localhost:3000/boards/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setBoard(data);
+        setCards(data.cards || []);
+      });
+  }, [id]);
+
+  const handleCreateCard = () => {
+    if (!message || !gifUrl) return;
+
+    fetch("http://localhost:3000/cards", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message,
+        gifUrl,
+        author,
+        boardId: parseInt(id),
+      }),
+    })
+      .then((res) => res.json())
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        setMessage("");
+        setGifUrl("");
+        setAuthor("");
+      });
+  };
+
+  const handleUpvote = (cardId) => {
+    fetch(`http://localhost:3000/cards/${cardId}/upvote`, {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((updated) => {
+        setCards(cards.map((card) => (card.id === cardId ? updated : card)));
+      });
+  };
+
+  const handleDelete = (cardId) => {
+    fetch(`http://localhost:3000/cards/${cardId}`, {
+      method: "DELETE",
+    }).then(() => {
+      setCards(cards.filter((card) => card.id !== cardId));
+    });
+  };
+
+  if (!board) return <p>Loading...</p>;
+
+  return (
+    <div className="board-page">
+      {/* Banner */}
+      <img
+        src={`https://source.unsplash.com/800x300/?${board.category}`}
+        alt="Board Banner"
+        className="banner-img"
+      />
+
+      <h1>{board.title}</h1>
+      <p>
+        {board.category} {board.author && `• by ${board.author}`}
+      </p>
+
+      {/* Cards */}
+      <div className="card-grid">
+        {cards.map((card) => (
+          <div key={card.id} className="card">
+            <img src={card.gifUrl} alt="GIF" className="card-gif" />
+            <p>
+              <strong>{card.message}</strong>
+            </p>
+            {card.author && <p>— {card.author}</p>}
+            <p>❤️ {card.upvotes}</p>
+            <button onClick={() => handleUpvote(card.id)}>Upvote</button>
+            <button onClick={() => handleDelete(card.id)}>Delete</button>
+          </div>
+        ))}
+      </div>
+
+      {/* Add Card */}
+      <div className="add-card-form">
+        <h3>Create a Card</h3>
+        <input
+          placeholder="Message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <input
+          placeholder="GIF URL"
+          value={gifUrl}
+          onChange={(e) => setGifUrl(e.target.value)}
+        />
+        <input
+          placeholder="Author (optional)"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+        />
+        <button onClick={handleCreateCard}>Add Card</button>
+      </div>
+
+      <Link to="/">
+        <button style={{ marginTop: "20px" }}>← Back to Home</button>
+      </Link>
+    </div>
+  );
+}
+
+export default BoardPage;

@@ -56,9 +56,9 @@ function Home() {
 
   return (
     <div className="home-page">
-      <h1>KUDOBOARD 🎉</h1>
+      <h1>KUDOBOARD </h1>
 
-      {/* Search */}
+      
       <div className="search-bar">
         <input
           type="text"
@@ -69,7 +69,7 @@ function Home() {
         <button onClick={() => setSearch("")}>Clear</button>
       </div>
 
-      {/* Filters */}
+      
       <div className="filters">
         {["All", "Recent", "Celebration", "Thank You", "Inspiration"].map(
           (btn) => (
@@ -84,18 +84,21 @@ function Home() {
         )}
       </div>
 
-      {/* Create Board Form */}
+      
       <CreateBoardForm onBoardCreated={handleAddBoard} />
 
-      {/* Board Grid */}
+      
       <div className="board-grid">
-        {filteredBoards.map((board) => (
-          <BoardCard
-            key={board.id}
-            board={board}
-            onDelete={handleDeleteBoard}
+        {filteredBoards.map((board) => {
+            const randomNumber = Math.floor(Math.random() * 1000);
+            const imgUrl = `https://picsum.photos/200/300?random=${randomNumber}`;
+            return <BoardCard
+                key={board.id}
+                board={board}
+                onDelete={handleDeleteBoard}
+                imgUrl={imgUrl}
           />
-        ))}
+        })}
       </div>
     </div>
   );

@@ -1,28 +1,6 @@
-// const express = require('express');
-// const cors = require("cors");
-// const app = express();
-
-// const { PrismaClient } = require('./generated/prisma');
-// const prisma = new PrismaClient();
-
-// app.use(express.json());
-// app.use(cors());
-
-// const boardRoutes= require('./routes/boardRoutes');
-// const cardRoutes = require('./routes/cardRoutes');
-
-// app.use('/boards', boardRoutes);
-// app.use('/cards', cardRoutes);
-
-
-// const PORT = process.env.PORT||3000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}`);
-// });
-
 import express from "express";
 import cors from "cors";
-import { PrismaClient } from "./generated/prisma/index.js"; //error
+import { PrismaClient } from "./generated/prisma/index.js"; 
 
 const app = express();
 const prisma = new PrismaClient();
@@ -31,18 +9,6 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  try {
-    res.json('base')
-    console.log('base')
-    res.send('✅ Backend is working!')
-    // Remove this line, as you can only send one response per request
-    // res.send('✅ Backend is working!')
-  } catch (err) {
-    console.error(err)
-    res.status(500).send('Internal Server Error')
-  }
-});
 
 app.get("/boards", async (req, res) => {
   const{category, author} =req.query;
@@ -54,7 +20,6 @@ app.get("/boards", async (req, res) => {
   if (author){
     filters.author=author;
   }
-  
 
   try {
     const boards = await prisma.board.findMany({
@@ -72,13 +37,13 @@ app.get("/boards", async (req, res) => {
 app.get("/boards/:id", async (req, res) => {
   const boardId = parseInt(req.params.id);
   try {
-    const Newboard = await prisma.board.findUnique({
+    const newboard = await prisma.board.findUnique({
       where: { id: boardId },
       include: { cards: true },
     });
 
-    if (!Newboard) return res.status(404).json({ error: "Board not found" });
-    res.json(Newboard);
+    if (!newboard) return res.status(404).json({ error: "Board not found" });
+    res.json(newboard);
   } catch (err) {
     res.status(500).json({ error: "Failed to get board" });
   }
@@ -87,6 +52,7 @@ app.get("/boards/:id", async (req, res) => {
 // Create a board
 app.post("/boards", async (req, res) => {
   const { title, category, author } = req.body;
+
   try {
     const board = await prisma.board.create({
       data: 

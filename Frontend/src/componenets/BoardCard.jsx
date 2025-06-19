@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-function BoardCard({ board, onDelete }) {
+function BoardCard({ board, onDelete, imgUrl }) {
   return (
     <div className="board-tile">
       <img
-        src={`https://source.unsplash.com/400x200/?${board.category}`}
+        src={imgUrl}
         alt={board.title}
         className="board-img"
       />
