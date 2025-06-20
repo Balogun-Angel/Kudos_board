@@ -77,6 +77,15 @@ function BoardPage() {
       });
   };
 
+  const handleTogglePin = async (cardId) => {
+    const res = await fetch(`http://localhost:3000/cards/${cardId}/pin`, {
+      method: "PATCH",
+    });
+    const updated = await res.json();
+
+    setCards((prev) => prev.map((c) => (c.id === cardId ? updated : c)));
+  };
+
   const handleDelete = (cardId) => {
     fetch(`http://localhost:3000/cards/${cardId}`, {
       method: "DELETE",
@@ -100,24 +109,39 @@ function BoardPage() {
         {board.category} {board.author && `• by ${board.author}`}
       </p>
 
-     
       <div className="card-grid">
-        {cards.map((card) => (
-          <div key={card.id} className="card">
-            <img src={card.gifUrl} alt="GIF" className="card-gif" />
-            <p>
-              <strong>{card.message}</strong>
-            </p>
-            {card.author && <p>— {card.author}</p>}
-            <p>❤️ {card.upvotes}</p>
-            <button onClick={() => handleUpvote(card.id)}>Upvote</button>
-            <button onClick={() => handleDelete(card.id)}>Delete</button>
-            <Comments cardId={card.id}/>
-          </div>
-        ))}
+        {cards
+          .slice()
+          .sort((a, b) => {
+            if (a.pinned === b.pinned) {
+              return new Date(b.createdAt) - new Date(a.createdAt); 
+            }
+            return a.pinned ? -1 : 1; 
+          })
+          .map((card) => (
+            <div
+              key={card.id}
+              className={`card ${card.pinned ? "pinned" : ""}`}
+            >
+              <img src={card.gifUrl} alt="GIF" className="card-gif" />
+              <p>
+                <strong>{card.message}</strong>
+              </p>
+              {card.author && <p>{card.author}</p>}
+              <p>{card.upvotes} ❤️</p>
+
+              <button onClick={() => handleTogglePin(card.id)}>
+                {card.pinned ? "Unpin" : "Pin"}
+              </button>
+
+              <button onClick={() => handleUpvote(card.id)}>Upvote</button>
+              <button onClick={() => handleDelete(card.id)}>Delete</button>
+
+              <Comments cardId={card.id} />
+            </div>
+          ))}
       </div>
 
-     
       <div className="add-card-form">
         <h3>Create a Card</h3>
         <input
@@ -131,7 +155,6 @@ function BoardPage() {
           onChange={(e) => setGifUrl(e.target.value)}
         />
 
-        
         <input
           type="text"
           placeholder="Search GIFs"
