@@ -10,18 +10,16 @@ function Home() {
   const [filter, setFilter] = useState("All");
   const [showModal, setShowModal] = useState(false);
 
-  // Fetch all boards
   useEffect(() => {
     fetch("http://localhost:3000/boards")
       .then((res) => res.json())
       .then((data) => {
-        // console.log("Boards:", data);
         setBoards(data);
         setFilteredBoards(data);
       });
   }, []);
 
-  // Apply filters and search
+ 
   useEffect(() => {
     let filtered = boards;
 
@@ -42,7 +40,7 @@ function Home() {
     setFilteredBoards(filtered);
   }, [search, filter, boards]);
 
-  // Delete a board
+  
   const handleDeleteBoard = (id) => {
     fetch(`http://localhost:3000/boards/${id}`, {
       method: "DELETE",
@@ -51,7 +49,14 @@ function Home() {
     });
   };
 
-  // Add a board
+  const handleSearch = () => {
+    const filtered = boards.filter((board) =>
+      board.title.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredBoards(filtered);
+  };
+
+
   const handleAddBoard = (newBoard) => {
     setBoards([newBoard, ...boards]);
   };
@@ -66,6 +71,7 @@ function Home() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <button onClick={handleSearch}>Search</button>
         <button onClick={() => setSearch("")}>Clear</button>
       </div>
       <div className="filters">
@@ -100,22 +106,20 @@ function Home() {
         </div>
       )}
 
-      
-        <div className="board-grid">
-          {filteredBoards.map((board) => {
-            const randomNumber = Math.floor(Math.random() * 1000);
-            const imgUrl = `https://picsum.photos/200/300?random=${randomNumber}`;
-            return (
-              <BoardCard
-                key={board.id}
-                board={board}
-                onDelete={handleDeleteBoard}
-                imgUrl={imgUrl}
-              />
-            );
-          })}
-        </div>
-      
+      <div className="board-grid">
+        {filteredBoards.map((board) => {
+          const randomNumber = Math.floor(Math.random() * 1000);
+          const imgUrl = `https://picsum.photos/200/300?random=${randomNumber}`;
+          return (
+            <BoardCard
+              key={board.id}
+              board={board}
+              onDelete={handleDeleteBoard}
+              imgUrl={imgUrl}
+            />
+          );
+        })}
+      </div>
 
       <footer className="footer">
         <p>&copy; 2025 kudoboard</p>

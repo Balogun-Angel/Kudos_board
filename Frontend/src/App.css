@@ -1,20 +1,23 @@
-html,
+/* html,
 body {
   margin: 0;
   padding: 0;
   width: 100%;
   overflow-x: hidden;
-}
+} */
 
-/* Overall container */
+
 .app-container {
-  display: flex;
+  /* display: flex;
   align-items: center;
   min-height: 100vh;
   width: 100%;
   padding: 2rem;
-  text-align: center;
-}
+  text-align: center; */
+  max-width: 1600px;
+  width: 100%;
+  border: 2px dashed red;;
+} 
 
 h1 {
   font-size: 2.5rem;
@@ -70,6 +73,7 @@ h1 {
 .filters button.active {
   background: #195c4c;
   color: white;
+  border: 2px dashed red;
 }
 
 .create-board-form {
@@ -91,6 +95,7 @@ h1 {
   font-size: 1rem;
   flex: 1;
   min-width: 200px;
+  border: 2px dashed red;;
 }
 
 .create-board-form button {
@@ -111,6 +116,7 @@ h1 {
   display: block;
   width: 100%;
   height: 100px;
+  border: 2px dashed red;;
 }
 
 .board-grid {
@@ -120,11 +126,12 @@ h1 {
   gap: 1.5rem;
   padding: 2rem;
   width: 100%;
-  /* max-width: 1200px; */
+  max-width: 1200px;
+  justify-content: center;
   justify-content: center;
   margin: 2rem auto;
-  /* padding-bottom: 3rem; */
-  /* align-self: start; */
+  padding-bottom: 3rem;
+  align-self: start; 
 } 
 
 .board-tile {
@@ -254,6 +261,29 @@ button:hover {
 
 .create-btn:hover {
   background-color: #144b3e;
+}
+
+.popup-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background-color: rgba(0, 0, 0, 0.6);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 999;
+}
+
+.comment-modal {
+background-color: #fff;
+padding: 2rem;
+border-radius: 10px;
+width: 90%;
+max-width: 500px;
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+position: relative;
 }
 
 .footer {

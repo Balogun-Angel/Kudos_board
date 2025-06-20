@@ -142,6 +142,27 @@ app.patch("/cards/:id/upvote", async (req, res) => {
   }
 });
 
+app.post('/comments', async (req, res) =>{
+  const { cardId, text, author} =req.body;
+  if (!text || !cardId) return res.status(400).json({ error: 'Text required and please specify the card'});
+
+  const comment =await prisma.comment.create({
+    data:{text, author, cardId: parseInt(cardId)}
+  });
+  res.json(comment);
+});
+
+app.get("/comments/:cardId", async (req, res) => {
+  const cardId = parseInt(req.params.cardId);
+  const comments = await prisma.comment.findMany({
+      where: {  cardId },
+      orderBy: { createdAt: "desc" },
+    });
+    res.json(comments);
+});
+
+
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

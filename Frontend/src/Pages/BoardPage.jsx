@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import Comments from "../componenets/Comments";
 
 function BoardPage() {
   const { id } = useParams();
@@ -8,8 +9,27 @@ function BoardPage() {
   const [message, setMessage] = useState("");
   const [gifUrl, setGifUrl] = useState("");
   const [author, setAuthor] = useState("");
+  const [gifSearch, setGifSearch] = useState("");
+  const [gifResults, setGifResults] = useState([]);
+  const GIPHY_API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
 
-  // Fetch board and its cards
+  const searchGifs = async () => {
+    try {
+      const res = await fetch(
+        `https://api.giphy.com/v1/gifs/search?q=${gifSearch}&api_key=${GIPHY_API_KEY}&limit=6`
+      );
+      const data = await res.json();
+      setGifResults(data.data);
+    } catch (err) {
+      console.error("Error fetching GIFs", err);
+    }
+  };
+
+  const selectGif = (url) => {
+    setGifUrl(url);
+    setGifResults([]);
+  };
+
   useEffect(() => {
     fetch(`http://localhost:3000/boards/${id}`)
       .then((res) => res.json())
@@ -20,7 +40,10 @@ function BoardPage() {
   }, [id]);
 
   const handleCreateCard = () => {
-    if (!message || !gifUrl) return;
+    if (!message.trim() || !gifUrl.trim()) {
+      alert("Both message and GIF are required to create a card.");
+      return;
+    }
 
     fetch("http://localhost:3000/cards", {
       method: "POST",
@@ -38,6 +61,9 @@ function BoardPage() {
         setMessage("");
         setGifUrl("");
         setAuthor("");
+      })
+      .catch((err) => {
+        console.error("Error creating cards:", err);
       });
   };
 
@@ -63,7 +89,6 @@ function BoardPage() {
 
   return (
     <div className="board-page">
-      {/* Banner */}
       <img
         src={`https://source.unsplash.com/800x300/?${board.category}`}
         alt="Board Banner"
@@ -75,7 +100,7 @@ function BoardPage() {
         {board.category} {board.author && `• by ${board.author}`}
       </p>
 
-      {/* Cards */}
+     
       <div className="card-grid">
         {cards.map((card) => (
           <div key={card.id} className="card">
@@ -87,11 +112,12 @@ function BoardPage() {
             <p>❤️ {card.upvotes}</p>
             <button onClick={() => handleUpvote(card.id)}>Upvote</button>
             <button onClick={() => handleDelete(card.id)}>Delete</button>
+            <Comments cardId={card.id}/>
           </div>
         ))}
       </div>
 
-      {/* Add Card */}
+     
       <div className="add-card-form">
         <h3>Create a Card</h3>
         <input
@@ -104,6 +130,35 @@ function BoardPage() {
           value={gifUrl}
           onChange={(e) => setGifUrl(e.target.value)}
         />
+
+        
+        <input
+          type="text"
+          placeholder="Search GIFs"
+          value={gifSearch}
+          onChange={(e) => setGifSearch(e.target.value)}
+        />
+        <button onClick={searchGifs}>Search GIFs</button>
+
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            marginTop: "10px",
+          }}
+        >
+          {gifResults.map((gif) => (
+            <img
+              key={gif.id}
+              src={gif.images.fixed_height_small.url}
+              alt="GIF"
+              style={{ width: "100px", cursor: "pointer" }}
+              onClick={() => selectGif(gif.images.original.url)}
+            />
+          ))}
+        </div>
+
         <input
           placeholder="Author (optional)"
           value={author}
