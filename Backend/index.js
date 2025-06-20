@@ -34,7 +34,6 @@ app.get("/boards", async (req, res) => {
   }
 });
 
-// Get one board by ID
 app.get("/boards/:id", async (req, res) => {
   const boardId = parseInt(req.params.id);
   try {
@@ -50,7 +49,7 @@ app.get("/boards/:id", async (req, res) => {
   }
 });
 
-// Create a board
+
 app.post("/boards", async (req, res) => {
   const { title, category, author } = req.body;
 
@@ -69,7 +68,7 @@ app.post("/boards", async (req, res) => {
   }
 });
 
-// Delete a board
+
 app.delete("/boards/:id", async (req, res) => {
   const boardId = parseInt(req.params.id);
   try {
@@ -97,7 +96,6 @@ app.get("/cards/:id", async (req, res) => {
   }
 });
 
-// Create a card
 app.post("/cards", async (req, res) => {
   const { message, gifUrl, author, boardId } = req.body;
   try {
@@ -115,7 +113,6 @@ app.post("/cards", async (req, res) => {
   }
 });
 
-// Delete a card
 app.delete("/cards/:id", async (req, res) => {
   const cardId = parseInt(req.params.id);
   try {
@@ -128,7 +125,7 @@ app.delete("/cards/:id", async (req, res) => {
   }
 });
 
-// Upvote a card
+
 app.patch("/cards/:id/upvote", async (req, res) => {
   const cardId = parseInt(req.params.id);
   try {
