@@ -102,10 +102,9 @@ h1 {
 }
 
 .container {
-  min-width: 100px;
-  min-height: 100px;
-  margin: 10px;
-  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .empty-element {
@@ -116,20 +115,24 @@ h1 {
 
 .board-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  border: 2px dashed red;;
+  gap: 1.5rem;
+  padding: 2rem;
   width: 100%;
-  max-width: 1650px;
+  /* max-width: 1200px; */
   justify-content: center;
-  padding-bottom: 3rem;
-}
+  margin: 2rem auto;
+  /* padding-bottom: 3rem; */
+  /* align-self: start; */
+} 
 
 .board-tile {
   background: white;
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  width: 250px;
+  width: 100%;
   text-align: center;
 }
 
@@ -163,7 +166,7 @@ h1 {
 .board-tile button:first-of-type {
   background: #195c4c;
   color: white;
-}
+} 
 
 .board-tile button:last-of-type {
   background-color: #195c4c;
@@ -184,7 +187,7 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+   z-index: 1000; 
 }
 
 .modal {
@@ -262,4 +265,5 @@ button:hover {
   margin-top: auto;
   position: relative;
   bottom: 0;
-}
+} 
+

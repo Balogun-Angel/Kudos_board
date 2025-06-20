@@ -13,12 +13,10 @@ function Home() {
   // Fetch all boards
   useEffect(() => {
     fetch("http://localhost:3000/boards")
-      //    fetch(`${import.meta.env.VITE_KUDOS_BOARD_API_URL}/boards`)
       .then((res) => res.json())
       .then((data) => {
+        // console.log("Boards:", data);
         setBoards(data);
-        console.log("Boards:", data);
-        console.log("Filtered Boards:", filteredBoards);
         setFilteredBoards(data);
       });
   }, []);
@@ -101,9 +99,8 @@ function Home() {
           </div>
         </div>
       )}
-      {filteredBoards.length === 0 ? (
-        <p> No boards found</p>
-      ) : (
+
+      
         <div className="board-grid">
           {filteredBoards.map((board) => {
             const randomNumber = Math.floor(Math.random() * 1000);
@@ -118,7 +115,7 @@ function Home() {
             );
           })}
         </div>
-      )}
+      
 
       <footer className="footer">
         <p>&copy; 2025 kudoboard</p>
