@@ -4,25 +4,27 @@ body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
-} */
+}  */
 
 
 .app-container {
-  /* display: flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  width: 100%;
-  padding: 2rem;
-  text-align: center; */
-  max-width: 1600px;
-  width: 100%;
-  border: 2px dashed red;;
-} 
+  justify-content: center;
+  width: 100vw;
+  height: 150vh;
+  max-width: 1650px; 
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
 
 h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   min-width: 1000px;
+  text-align: center;
 }
 
 .search-bar {
@@ -42,6 +44,7 @@ h1 {
   padding: 0.6rem 1rem;
   font-size: 1rem;
   border-radius: 6px;
+  text-align: center;
   border: 1px solid #ccc;
 }
 
@@ -58,7 +61,8 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
@@ -73,7 +77,6 @@ h1 {
 .filters button.active {
   background: #195c4c;
   color: white;
-  border: 2px dashed red;
 }
 
 .create-board-form {
@@ -85,6 +88,7 @@ h1 {
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
   text-align: left;
   position: relative;
+  
 }
 
 .create-board-form input,
@@ -95,7 +99,7 @@ h1 {
   font-size: 1rem;
   flex: 1;
   min-width: 200px;
-  border: 2px dashed red;;
+  text-align: center;
 }
 
 .create-board-form button {
@@ -116,36 +120,31 @@ h1 {
   display: block;
   width: 100%;
   height: 100px;
-  border: 2px dashed red;;
 }
 
 .board-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  border: 2px dashed red;;
-  gap: 1.5rem;
-  padding: 2rem;
+  gap: 3rem;
   width: 100%;
-  max-width: 1200px;
-  justify-content: center;
   justify-content: center;
   margin: 2rem auto;
   padding-bottom: 3rem;
-  align-self: start; 
-} 
+}  
 
 .board-tile {
   background: white;
-  border-radius: 8px;
+  border-radius: 15px;
   padding: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  width: 100%;
   text-align: center;
+  width: 250px; 
+  /* height: 35vh; */
 }
 
 .board-tile img {
   width: 100%;
-  height: 160px;
+  height: 250px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1rem;
@@ -154,6 +153,7 @@ h1 {
 .board-tile h3 {
   font-size: 1rem;
   margin: 0.5rem 0;
+
 }
 
 .board-tile p {
@@ -168,6 +168,7 @@ h1 {
   border-radius: 4px;
   border: none;
   cursor: pointer;
+  gap: 3rem;
 }
 
 .board-tile button:first-of-type {
