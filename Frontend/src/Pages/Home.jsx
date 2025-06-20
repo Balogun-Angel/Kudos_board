@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import BoardCard from "../componenets/BoardCard";
 import CreateBoardForm from "../componenets/CreateBoardForm";
 
-function Home() {
+function Home({ darkMode, setDarkMode}) {
   const [boards, setBoards] = useState([]);
   const [filteredBoards, setFilteredBoards] = useState([]);
   const [search, setSearch] = useState("");
@@ -63,6 +63,11 @@ function Home() {
 
   return (
     <div className="app-container">
+
+       <button onClick={() => setDarkMode(!darkMode)} className=" toggle-theme">
+        {darkMode ? "Switch to light Mode" : "Switch to Dark Mode" }
+      </button>
+
       <h1>KUDOBOARD </h1>
       <div className="search-bar">
         <input

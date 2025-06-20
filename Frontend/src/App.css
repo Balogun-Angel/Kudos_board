@@ -1,11 +1,30 @@
+body{
+  background-color: white;
+  color: black;
+}
+
+body.dark-mode{
+  background-color: #121212;
+  color: white; 
+}
+
+.toggle-theme{
+  margin: 16px;
+  padding : 8px 14px;
+  border-radius: 5px;
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid black;
+  cursor: pointer;
+}
 .app-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 250vw;
+  width: 200vw;
   min-height: 100vh;
-  max-width: 1650px;
+  max-width: 100vw;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
@@ -123,7 +142,8 @@ h1 {
 }
 
 .board-tile {
-  background: white;
+  background: #195c4c;
+  color:white;
   border-radius: 15px;
   padding: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
@@ -277,7 +297,7 @@ button:hover {
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2rem;
   width: 100%;
   justify-content: center;
@@ -286,7 +306,8 @@ button:hover {
 }
 
 .card {
-  background-color: #ffffff;
+  background-color: #195c4c;
+  color: white;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;

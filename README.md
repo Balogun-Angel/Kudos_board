@@ -74,7 +74,7 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
   - [x ] Users are given the option to specify the author of the card.
   - [ x] When the new card is successfully created, it appears in the grid of cards. 
 - [ x] **Upvote Card**
-  - [ ]x Users can upvote a card.
+  - [x ] Users can upvote a card.
   - [ x] Update the vote count on the card tile when a user clicks the upvote icon.
   - [x ] When the upvote icon is clicked the upvote count increases by 1. 
   - [x ] A user can upvote a card multiple times. 
@@ -95,25 +95,25 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
     - [ x] Text message 
     - [ ] Gif
     - [ x] Author (if specified)
-    - [ ]x A list of the card's comments and each comment's:
+    - [x ] A list of the card's comments and each comment's:
       - [ x] Message body
       - [ x] Author (if specified)
   - [x ] Users can add multiple comments to a single card.
-- [ ] **Dark Mode** 
-  - [ ] Users can toggle between light mode and dark mode using a button displayed on the:
-    - [ ] Home Page
-    - [ ] Board Pages
-  - [ ] When the button is clicked, the color theme switches to the opposite of the current mode. 
-  - [ ] When dark mode is enabled:
-    - [ ] Text and icons use a light color
-    - [ ] The background uses a dark color
+- [ x] **Dark Mode** 
+  - [ x] Users can toggle between light mode and dark mode using a button displayed on the:
+    - [x ] Home Page
+    - [x ] Board Pages
+  - [x ] When the button is clicked, the color theme switches to the opposite of the current mode. 
+  - [ x] When dark mode is enabled:
+    - [x ] Text and icons use a light color
+    - [ x] The background uses a dark color
     - [ ] Color contrast has at least a 4.5:1 ratio using this [color contrast checker](https://webaim.org/resources/contrastchecker/)
-  - [ ] When light mode is enabled:
-    - [ ] Text and icons use a dark color
-    - [ ] The background uses a light color
+  - [x ] When light mode is enabled:
+    - [ x] Text and icons use a dark color
+    - [ x] The background uses a light color
     - [ ] Color contrast has at least a 4.5:1 ratio using this [color contrast checker](https://webaim.org/resources/contrastchecker/)
-  - [ ] The chosen mode (light or dark) persists when navigating from home page to board pages and vice versa.
-  - [ ] When the user first visits the site the theme defaults to light mode.
+  - [x ] The chosen mode (light or dark) persists when navigating from home page to board pages and vice versa.
+  - [ x] When the user first visits the site the theme defaults to light mode.
   - [ ] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: To ease the grading process, please use the [color contrast checker](https://webaim.org/resources/contrastchecker/) to demonstrate to the grading team that text and background colors on your website have appropriate contrast in both light and dark mode. The Contrast Ratio should be above 4.5:1 and should have a green box surrounding it. 
 - [x ] **Pinned Cards**
   - [ x] Users can pin a card to the top of the board.

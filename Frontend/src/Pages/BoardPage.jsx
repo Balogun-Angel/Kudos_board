@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import Comments from "../componenets/Comments";
 // import CreateCardModal from "../componenets/CreateCardModal.jsx";
 
-function BoardPage() {
+function BoardPage({ darkMode, setDarkMode}) {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
   const [cards, setCards] = useState([]);
@@ -105,8 +105,13 @@ function BoardPage() {
 
   return (
     <div className="app-container">
+
+      <button onClick={() => setDarkMode(!darkMode)} className=" toggle-theme">
+        {darkMode ? "Switch to light Mode" : "Switch to Dark Mode" }
+      </button>
+
       <h1>KUDOBOARD </h1>
-      <h2>{board.title}</h2>
+      <h2 className = "board-subtitle">{board.title} </h2>
       <p>
         {board.category} {board.author && `• by ${board.author}`}
       </p>
