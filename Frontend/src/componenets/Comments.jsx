@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function Comments({ cardId }) {
   const [showComments, setShowComments] = useState(false);
+  const [activeCardId, setActiveCardId] =useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [author, setAuthor] = useState("");
@@ -31,6 +32,7 @@ function Comments({ cardId }) {
     <>
       <button
         onClick={() => {
+            setActiveCardId(cardId)
           setShowComments(true);
           fetchComments();
         }}
@@ -39,8 +41,8 @@ function Comments({ cardId }) {
       </button>
 
       {showComments && (
-        <div className= "popup-overlay" onClick={() => setShowComments(false)}>
-        <div className="comment-modal" onClick={(e) => e.stopPropagation()}>
+        <div className= "modal-overlay" onClick={() => setShowComments(false)}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <h3>Comments</h3>
           <input
             value={author}
