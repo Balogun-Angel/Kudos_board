@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Comments from "../componenets/Comments";
+// import CreateCardModal from "../componenets/CreateCardModal.jsx";
 
 function BoardPage() {
   const { id } = useParams();
@@ -11,6 +12,8 @@ function BoardPage() {
   const [author, setAuthor] = useState("");
   const [gifSearch, setGifSearch] = useState("");
   const [gifResults, setGifResults] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  // const [showCreateCard, setShowCreatedCard]=useState(false);
   const GIPHY_API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
 
   const searchGifs = async () => {
@@ -58,8 +61,12 @@ function BoardPage() {
       .then((res) => res.json())
       .then((newCard) => {
         setCards([newCard, ...cards]);
+        setShowModal(false);
+
         setMessage("");
         setGifUrl("");
+        setGifSearch("");
+        setGifResults("");
         setAuthor("");
       })
       .catch((err) => {
@@ -97,26 +104,29 @@ function BoardPage() {
   if (!board) return <p>Loading...</p>;
 
   return (
-    <div className="board-page">
-      <img
-        src={`https://source.unsplash.com/800x300/?${board.category}`}
-        alt="Board Banner"
-        className="banner-img"
-      />
-
-      <h1>{board.title}</h1>
+    <div className="app-container">
+      <h1>KUDOBOARD </h1>
+      <h2>{board.title}</h2>
       <p>
         {board.category} {board.author && `• by ${board.author}`}
       </p>
+
+      <button
+        onClick={() => setShowModal(true)}
+        className="create-card -button"
+      >
+        {" "}
+        Create a Card
+      </button>
 
       <div className="card-grid">
         {cards
           .slice()
           .sort((a, b) => {
             if (a.pinned === b.pinned) {
-              return new Date(b.createdAt) - new Date(a.createdAt); 
+              return new Date(b.createdAt) - new Date(a.createdAt);
             }
-            return a.pinned ? -1 : 1; 
+            return a.pinned ? -1 : 1;
           })
           .map((card) => (
             <div
@@ -141,58 +151,71 @@ function BoardPage() {
             </div>
           ))}
       </div>
-
-      <div className="add-card-form">
-        <h3>Create a Card</h3>
-        <input
-          placeholder="Message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <input
-          placeholder="GIF URL"
-          value={gifUrl}
-          onChange={(e) => setGifUrl(e.target.value)}
-        />
-
-        <input
-          type="text"
-          placeholder="Search GIFs"
-          value={gifSearch}
-          onChange={(e) => setGifSearch(e.target.value)}
-        />
-        <button onClick={searchGifs}>Search GIFs</button>
-
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "10px",
-            marginTop: "10px",
-          }}
-        >
-          {gifResults.map((gif) => (
-            <img
-              key={gif.id}
-              src={gif.images.fixed_height_small.url}
-              alt="GIF"
-              style={{ width: "100px", cursor: "pointer" }}
-              onClick={() => selectGif(gif.images.original.url)}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button
+              onClick={() => setShowModal(false)}
+              className=" close-button"
+            >
+              𝐗
+            </button>
+            <h3>Create a Card</h3>
+            <input
+              placeholder="Message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             />
-          ))}
-        </div>
+            <input
+              placeholder="GIF URL"
+              value={gifUrl}
+              onChange={(e) => setGifUrl(e.target.value)}
+            />
 
-        <input
-          placeholder="Author (optional)"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
-        <button onClick={handleCreateCard}>Add Card</button>
-      </div>
+            <input
+              type="text"
+              placeholder="Search GIFs"
+              value={gifSearch}
+              onChange={(e) => setGifSearch(e.target.value)}
+            />
+            <button onClick={searchGifs}>Search GIFs</button>
+
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
+                marginTop: "10px",
+              }}
+            >
+              {gifResults.map((gif) => (
+                <img
+                  key={gif.id}
+                  src={gif.images.fixed_height_small.url}
+                  alt="GIF"
+                  style={{ width: "100px", cursor: "pointer" }}
+                  onClick={() => selectGif(gif.images.original.url)}
+                />
+              ))}
+            </div>
+
+            <input
+              placeholder="Author (optional)"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+            />
+            <button onClick={handleCreateCard}>Add Card</button>
+          </div>
+        </div>
+      )}
 
       <Link to="/">
         <button style={{ marginTop: "20px" }}>← Back to Home</button>
       </Link>
+
+      <footer className="footer">
+        <p>&copy; 2025 kudoboard</p>
+      </footer>
     </div>
   );
 }
