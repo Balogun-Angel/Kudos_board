@@ -12,10 +12,13 @@ function Home() {
 
   // Fetch all boards
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_KUDOS_BOARD_API_URL}/boards`)
+    fetch("http://localhost:3000/boards")
+      //    fetch(`${import.meta.env.VITE_KUDOS_BOARD_API_URL}/boards`)
       .then((res) => res.json())
       .then((data) => {
         setBoards(data);
+        console.log("Boards:", data);
+        console.log("Filtered Boards:", filteredBoards);
         setFilteredBoards(data);
       });
   }, []);
@@ -57,50 +60,50 @@ function Home() {
 
   return (
     <div className="app-container">
-        <h1>KUDOBOARD </h1>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search boards..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button onClick={() => setSearch("")}>Clear</button>
-        </div>
-        <div className="filters">
-          {["All", "Recent", "Celebration", "Thank You", "Inspiration"].map(
-            (btn) => (
-              <button
-                key={btn}
-                onClick={() => setFilter(btn)}
-                className={filter === btn ? "active" : ""}
-              >
-                {btn}
-              </button>
-            )
-          )}
-        </div>
-        <div className="create-button-container">
-          <button onClick={() => setShowModal(true)}>Create a New Board</button>
-        </div>
-        {showModal && (
-          <div className="modal-backdrop" onClick={() => setShowModal(false)}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-              <CreateBoardForm
-                onBoardCreated={(newBoard) => {
-                  handleAddBoard(newBoard);
-                  setShowModal(false);
-                }}
-              />
-              <button
-                className="close-modal"
-                onClick={() => setShowModal(false)}
-              >
-                ×
-              </button>
-            </div>
-          </div>
+      <h1>KUDOBOARD </h1>
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search boards..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button onClick={() => setSearch("")}>Clear</button>
+      </div>
+      <div className="filters">
+        {["All", "Recent", "Celebration", "Thank You", "Inspiration"].map(
+          (btn) => (
+            <button
+              key={btn}
+              onClick={() => setFilter(btn)}
+              className={filter === btn ? "active" : ""}
+            >
+              {btn}
+            </button>
+          )
         )}
+      </div>
+      <div className="create-button-container">
+        <button onClick={() => setShowModal(true)}>Create a New Board</button>
+      </div>
+      {showModal && (
+        <div className="modal-backdrop" onClick={() => setShowModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <CreateBoardForm
+              onBoardCreated={(newBoard) => {
+                handleAddBoard(newBoard);
+                setShowModal(false);
+              }}
+            />
+            <button className="close-modal" onClick={() => setShowModal(false)}>
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+      {filteredBoards.length === 0 ? (
+        <p> No boards found</p>
+      ) : (
         <div className="board-grid">
           {filteredBoards.map((board) => {
             const randomNumber = Math.floor(Math.random() * 1000);
@@ -115,11 +118,12 @@ function Home() {
             );
           })}
         </div>
-        <footer className="footer">
-          <p>&copy; 2025 kudoboard</p>
-        </footer>
-      </div>
-    
+      )}
+
+      <footer className="footer">
+        <p>&copy; 2025 kudoboard</p>
+      </footer>
+    </div>
   );
 }
 
