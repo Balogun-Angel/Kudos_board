@@ -17,6 +17,15 @@ model Board {
   cards     Card[]
 }
 
+model Comment {
+  id    Int     @id @default(autoincrement())
+  text  String
+  author  String?
+  cardId   Int
+  card    Card   @relation(fields: [cardId], references: [id])
+  createdAt DateTime @default(now())
+
+}
 model Card {
   id        Int      @id @default(autoincrement())
   message   String
@@ -24,6 +33,8 @@ model Card {
   author    String?
   upvotes   Int      @default(0)
   boardId   Int
+  pinned   Boolean @default(false)
+  comments   Comment[]
   createdAt DateTime @default(now())
   board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
 }

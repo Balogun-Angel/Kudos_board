@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { PrismaClient } from "./generated/prisma/index.js"; 
+import { PrismaClient } from "./generated/prisma/index.js";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -9,19 +9,17 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-
 app.get("/boards", async (req, res) => {
-  const{category, author} =req.query;
+  const { category, author } = req.query;
 
-  const filters={}
-  if (category){
-    filters.category=category;
+  const filters = {};
+  if (category) {
+    filters.category = category;
   }
-  if (author){
-    filters.author=author;
+  if (author) {
+    filters.author = author;
   }
 
-  
   try {
     const boards = await prisma.board.findMany({
       where: filters,
@@ -34,7 +32,6 @@ app.get("/boards", async (req, res) => {
   }
 });
 
-// Get one board by ID
 app.get("/boards/:id", async (req, res) => {
   const boardId = parseInt(req.params.id);
   try {
@@ -50,17 +47,15 @@ app.get("/boards/:id", async (req, res) => {
   }
 });
 
-// Create a board
 app.post("/boards", async (req, res) => {
   const { title, category, author } = req.body;
 
   try {
     const board = await prisma.board.create({
-      data: 
-      { 
+      data: {
         title,
         category,
-        author 
+        author,
       },
     });
     res.status(201).json(board);
@@ -69,7 +64,6 @@ app.post("/boards", async (req, res) => {
   }
 });
 
-// Delete a board
 app.delete("/boards/:id", async (req, res) => {
   const boardId = parseInt(req.params.id);
   try {
@@ -81,7 +75,6 @@ app.delete("/boards/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete board" });
   }
 });
-
 
 app.get("/cards/:id", async (req, res) => {
   const cardId = parseInt(req.params.id);
@@ -97,7 +90,6 @@ app.get("/cards/:id", async (req, res) => {
   }
 });
 
-// Create a card
 app.post("/cards", async (req, res) => {
   const { message, gifUrl, author, boardId } = req.body;
   try {
@@ -115,7 +107,6 @@ app.post("/cards", async (req, res) => {
   }
 });
 
-// Delete a card
 app.delete("/cards/:id", async (req, res) => {
   const cardId = parseInt(req.params.id);
   try {
@@ -128,7 +119,6 @@ app.delete("/cards/:id", async (req, res) => {
   }
 });
 
-// Upvote a card
 app.patch("/cards/:id/upvote", async (req, res) => {
   const cardId = parseInt(req.params.id);
   try {
@@ -140,6 +130,40 @@ app.patch("/cards/:id/upvote", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Failed to upvote card" });
   }
+});
+
+app.post("/comments", async (req, res) => {
+  const { cardId, text, author } = req.body;
+  if (!text || !cardId)
+    return res
+      .status(400)
+      .json({ error: "Text required and please specify the card" });
+
+  const comment = await prisma.comment.create({
+    data: { text, author, cardId: parseInt(cardId) },
+  });
+  res.json(comment);
+});
+
+app.get("/comments/:cardId", async (req, res) => {
+  const cardId = parseInt(req.params.cardId);
+  const comments = await prisma.comment.findMany({
+    where: { cardId },
+    orderBy: { createdAt: "desc" },
+  });
+  res.json(comments);
+});
+
+app.patch("/cards/:cardId/pin", async (req, res) => {
+  const cardId = parseInt(req.params.cardId);
+  const card = await prisma.card.findUnique({ where: { id: cardId } });
+
+  const updated = await prisma.card.update({
+    where: { id: cardId },
+    data: { pinned: !card.pinned },
+  });
+
+  res.json(updated);
 });
 
 app.listen(PORT, () => {
