@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Comments from "../componenets/Comments";
-// import CreateCardModal from "../componenets/CreateCardModal.jsx";
+
 
 function BoardPage({ darkMode, setDarkMode}) {
   const { id } = useParams();
+  const [activeCommentsCardId, SetActiveCommentsCardId] = useState(null);
   const [board, setBoard] = useState(null);
   const [cards, setCards] = useState([]);
   const [message, setMessage] = useState("");
@@ -13,8 +14,8 @@ function BoardPage({ darkMode, setDarkMode}) {
   const [gifSearch, setGifSearch] = useState("");
   const [gifResults, setGifResults] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  // const [showCreateCard, setShowCreatedCard]=useState(false);
   const GIPHY_API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
+  const VITE_KUDOS_BOARD_API_URl=import.meta.env.VITE_KUDOS_BOARD_API_URL;
 
   const searchGifs = async () => {
     try {
@@ -34,7 +35,7 @@ function BoardPage({ darkMode, setDarkMode}) {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/boards/${id}`)
+    fetch(`${VITE_KUDOS_BOARD_API_URl}/boards/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setBoard(data);
@@ -48,7 +49,7 @@ function BoardPage({ darkMode, setDarkMode}) {
       return;
     }
 
-    fetch("http://localhost:3000/cards", {
+    fetch(`${VITE_KUDOS_BOARD_API_URl}/cards`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -75,7 +76,7 @@ function BoardPage({ darkMode, setDarkMode}) {
   };
 
   const handleUpvote = (cardId) => {
-    fetch(`http://localhost:3000/cards/${cardId}/upvote`, {
+    fetch(`${VITE_KUDOS_BOARD_API_URl}/cards/${cardId}/upvote`, {
       method: "PATCH",
     })
       .then((res) => res.json())
@@ -85,7 +86,7 @@ function BoardPage({ darkMode, setDarkMode}) {
   };
 
   const handleTogglePin = async (cardId) => {
-    const res = await fetch(`http://localhost:3000/cards/${cardId}/pin`, {
+    const res = await fetch(`${VITE_KUDOS_BOARD_API_URl}/cards/${cardId}/pin`, {
       method: "PATCH",
     });
     const updated = await res.json();
@@ -94,7 +95,7 @@ function BoardPage({ darkMode, setDarkMode}) {
   };
 
   const handleDelete = (cardId) => {
-    fetch(`http://localhost:3000/cards/${cardId}`, {
+    fetch(`${VITE_KUDOS_BOARD_API_URl}/cards/${cardId}`, {
       method: "DELETE",
     }).then(() => {
       setCards(cards.filter((card) => card.id !== cardId));
@@ -151,11 +152,16 @@ function BoardPage({ darkMode, setDarkMode}) {
 
               <button onClick={() => handleUpvote(card.id)}>Upvote</button>
               <button onClick={() => handleDelete(card.id)}>Delete</button>
-
-              <Comments cardId={card.id} />
+               <Comments card={card} />
             </div>
           ))}
       </div>
+      {activeCommentsCardId && (
+        <Comments
+        cardId={activeCommentsCardId}
+        closeModal={() => SetActiveCommentsCardId(null)}
+        />
+      )}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">

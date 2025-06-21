@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BoardCard from "../componenets/BoardCard";
 import CreateBoardForm from "../componenets/CreateBoardForm";
+ const VITE_KUDOS_BOARD_API_URl=import.meta.env.VITE_KUDOS_BOARD_API_URL;
 
 function Home({ darkMode, setDarkMode}) {
   const [boards, setBoards] = useState([]);
@@ -11,7 +12,7 @@ function Home({ darkMode, setDarkMode}) {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3000/boards")
+    fetch(`${VITE_KUDOS_BOARD_API_URl}/boards`)
       .then((res) => res.json())
       .then((data) => {
         setBoards(data);
@@ -42,7 +43,7 @@ function Home({ darkMode, setDarkMode}) {
 
   
   const handleDeleteBoard = (id) => {
-    fetch(`http://localhost:3000/boards/${id}`, {
+    fetch(`${VITE_KUDOS_BOARD_API_URl}/boards/${id}`, {
       method: "DELETE",
     }).then(() => {
       setBoards(boards.filter((board) => board.id !== id));

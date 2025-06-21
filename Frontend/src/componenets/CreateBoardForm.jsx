@@ -5,6 +5,8 @@ function CreateBoardForm({ onBoardCreated }) {
   const [category, setCategory] = useState("");
   const [author, setAuthor] = useState("");
   const [error, setError] = useState("");
+  const VITE_KUDOS_BOARD_API_URl=import.meta.env.VITE_KUDOS_BOARD_API_URL;
+
 
   const handleCreateBoard = () => {
     if (!title || !category) {
@@ -13,7 +15,7 @@ function CreateBoardForm({ onBoardCreated }) {
     }
     setError(" ");
 
-    fetch("http://localhost:3000/boards", {
+    fetch(`${VITE_KUDOS_BOARD_API_URl}/boards`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, category, author }),
