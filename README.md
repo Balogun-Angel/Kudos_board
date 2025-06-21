@@ -2,9 +2,9 @@
 
 ## Unit Assignment: Kudos Board
 
-Submitted by: **NAME**
+Submitted by: Angel Balogun
 
-Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
+Deployed Application (**required**): [Kudos Board Deployed Site] https://kudos-board-frontend-h4jp.onrender.com
 
 ### Application Features
 
@@ -60,7 +60,7 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
 ##### Board Page
 
 - [ ] **Display Cards**
-  - [ ] For a given board, the board's page displays a list of all cards for that board in a grid view.
+  - [x ] For a given board, the board's page displays a list of all cards for that board in a grid view.
   - [ x] For each card should displayed, users can see the card's:
     - [ x] Message
     - [x ] Gif 
@@ -82,8 +82,8 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
   - [x ] Users can delete cards.
   - [x ] When the user clicks the delete button for a card, the card disappears from the grid of cards. 
 - [ ] **Deployment**
-  - [ ] Website is deployed via Render.
-  - [ ] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: For ease of grading, please use the deployed version of your website when creating your walkthrough. 
+  - [ x] Website is deployed via Render.
+  - [x ] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: For ease of grading, please use the deployed version of your website when creating your walkthrough. 
 
 ####  Stretch Features
 
@@ -93,7 +93,7 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
   - [ x] Users are given the option to specify the author of the comment.
   - [x ] Users can view comments on card in a pop-up modal that displays the card's:
     - [ x] Text message 
-    - [ ] Gif
+    - [x ] Gif
     - [ x] Author (if specified)
     - [x ] A list of the card's comments and each comment's:
       - [ x] Message body
@@ -107,14 +107,14 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
   - [ x] When dark mode is enabled:
     - [x ] Text and icons use a light color
     - [ x] The background uses a dark color
-    - [ ] Color contrast has at least a 4.5:1 ratio using this [color contrast checker](https://webaim.org/resources/contrastchecker/)
+    - [x ] Color contrast has at least a 4.5:1 ratio using this [color contrast checker](https://webaim.org/resources/contrastchecker/)
   - [x ] When light mode is enabled:
     - [ x] Text and icons use a dark color
     - [ x] The background uses a light color
     - [ ] Color contrast has at least a 4.5:1 ratio using this [color contrast checker](https://webaim.org/resources/contrastchecker/)
   - [x ] The chosen mode (light or dark) persists when navigating from home page to board pages and vice versa.
   - [ x] When the user first visits the site the theme defaults to light mode.
-  - [ ] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: To ease the grading process, please use the [color contrast checker](https://webaim.org/resources/contrastchecker/) to demonstrate to the grading team that text and background colors on your website have appropriate contrast in both light and dark mode. The Contrast Ratio should be above 4.5:1 and should have a green box surrounding it. 
+  - [ x] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: To ease the grading process, please use the [color contrast checker](https://webaim.org/resources/contrastchecker/) to demonstrate to the grading team that text and background colors on your website have appropriate contrast in both light and dark mode. The Contrast Ratio should be above 4.5:1 and should have a green box surrounding it. 
 - [x ] **Pinned Cards**
   - [ x] Users can pin a card to the top of the board.
   - [ x] A Pin button is displayed on each card.
@@ -145,11 +145,11 @@ Deployed Application (**required**): [Kudos Board Deployed Site](ADD_LINK_HERE)
 
 * Did the topics discussed in your labs prepare you to complete the assignment? Be specific, which features in your weekly assignment did you feel unprepared to complete?
 
-Add your response here
+Add your response here Yes, i loved learning backend
 
 * If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
   
-Add your response here
+Add your response here i would style my application better
 
 * Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
