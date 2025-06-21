@@ -315,9 +315,9 @@ button:hover {
   transition: transform 0.2s;
 }
 
-.card:hover {
+/* .card:hover {
   transform: scale(1.02);
-}
+} */
 
 .card-gif {
   width: 100%;
